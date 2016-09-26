@@ -10,16 +10,26 @@
                 margin : 7px;
             }
 
-            :host .menu-item paper-fab ::content iron-icon {
+            :host .menu-item paper-fab ::content .fa {
                 transform: rotate(0deg) !important;
             }
 
             :host .menu-item {
                 transform  : scale(0);
             }
+            :host paper-button {
+              border-radius: 50%;
+              width: 35px;
+              height: 35px;
+              font-size: 15pt;
+              min-width: 0px;
+              color: white;
+            }
         </style>
         <div class="menu-item">
-            <paper-fab id="paperFab" mini icon="{{ icon }}"></paper-fab>
+            <paper-button raised id="paperFab">
+              <span id='iconContent'></span>
+            </paper-button>
             <paper-tooltip offset="10" margin-top="0" position="{{ tooltipPosition }}">{{ label }}</paper-tooltip>
         </div>
     </template>
@@ -30,14 +40,21 @@
                 color : {
                     type : 'String'
                 },
+                icon: {
+                  type: String
+                },
                 tooltipPosition: {
                     type: 'String',
                     value: 'left'
                 }
             },
+            attached: function () {
+              this.querySelector('#iconContent').classList.add('fa', this.icon);
+            },
             ready      : function() {
-                if(this.color)
-                    this.$.paperFab.style.backgroundColor = this.color;
+                if(this.color) {
+                  this.$.paperFab.style.backgroundColor = this.color;
+                }
             }
         });
     </script>
